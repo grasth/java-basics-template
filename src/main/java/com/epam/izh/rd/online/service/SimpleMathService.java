@@ -1,5 +1,7 @@
 package com.epam.izh.rd.online.service;
 
+import java.util.Arrays;
+
 public class SimpleMathService implements MathService {
 
     /**
@@ -13,8 +15,10 @@ public class SimpleMathService implements MathService {
      */
     @Override
     public int compare(int value1, int value2) {
-        return -2;
+        //return compare(value1, value2);
+        return (value1 < value2) ? -1 : ((value1 == value2) ? 0 : 1);
     }
+
 
     /**
      * Метод возвращает максимальное число из пары.
@@ -22,16 +26,17 @@ public class SimpleMathService implements MathService {
      */
     @Override
     public int maxFrom(int value1, int value2) {
-        return -1;
+        return  (value1 > value2)? value1:value2;
     }
+
 
     /**
      * Метод возвращает максимальное число из переданного массива.
      * Например для списка {-1, -3, 4, 8, 5, 22, -5} метод должен вернуть 22
      */
     @Override
-    public int maxFrom(int[] values) {
-        return -1;
+    public int maxFrom(int[] values){
+        return Arrays.stream(values).max().getAsInt();
     }
 
     /**
@@ -40,7 +45,7 @@ public class SimpleMathService implements MathService {
      */
     @Override
     public int sum(int[] values) {
-        return -1;
+        return  Arrays.stream(values).sum();
     }
 
     /**
@@ -49,7 +54,7 @@ public class SimpleMathService implements MathService {
      */
     @Override
     public int[] getEvenDigits(int[] values) {
-        return new int[]{};
+        return  Arrays.stream(values).filter(x -> x%2 == 0).toArray();
     }
 
     /**
@@ -59,7 +64,7 @@ public class SimpleMathService implements MathService {
      */
     @Override
     public long calcFactorial(int initialVal) {
-        return -1L;
+        return (initialVal==0)?1:initialVal*calcFactorial(initialVal-1);
     }
 
     /**
@@ -74,7 +79,7 @@ public class SimpleMathService implements MathService {
      */
     @Override
     public long calcFibonacci(int number) {
-        return -1L;
+        return (number <= 1)?number:calcFibonacci(number-1)+calcFibonacci(number-2);
     }
 
     /**
@@ -83,7 +88,7 @@ public class SimpleMathService implements MathService {
      */
     @Override
     public int[] sort(int[] values) {
-        return new int[]{};
+        return Arrays.stream(values).sorted().toArray();
     }
 
     /**
@@ -94,7 +99,10 @@ public class SimpleMathService implements MathService {
      */
     @Override
     public boolean isPrimary(int number) {
-        return false;
+        double s = Math.sqrt(number);
+        for(int i = 2; i <= s; i++)
+            if(number % i == 0) return false;
+        return number > 1;
     }
 
     /**
@@ -104,6 +112,11 @@ public class SimpleMathService implements MathService {
      */
     @Override
     public int[] reverseArray(int[] values) {
-        return new int[]{};
+        for (int i = 0; i < values.length / 2; i++) {
+            int temp = values[i];
+            values[i] = values[values.length - i - 1];
+            values[values.length - i - 1] = temp;
+        }
+        return values;
     }
 }
